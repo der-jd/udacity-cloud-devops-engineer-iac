@@ -6,6 +6,9 @@ Parameters:
   EnvironmentName:
     Description: An environment name that will be prefixed to resource names
     Type: String
+  AmiId:
+    Description: The id of the Amazon machine image to use for the ec2 instances
+    Type: String
 
 Resources:
 
@@ -22,6 +25,8 @@ Resources:
             - ec2.amazonaws.com
           Action:
           - 'sts:AssumeRole'
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 
   # Instance Profile
   ServerInstanceProfile:
@@ -43,15 +48,23 @@ Resources:
         FromPort: 80
         ToPort: 80
         CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: -1
+        ToPort: -1
+        CidrIp: 0.0.0.0/0
 
   # Server EC2 Instance
   ServerInstance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-07df274a488ca9195 # Amazon Linux x86 ami for eu-central-1
+      ImageId: !Ref AmiId
       InstanceType: t2.micro
       IamInstanceProfile: !Ref ServerInstanceProfile
-      SecurityGroupIds:
-      - Ref: WebAccessSecurityGroup
-      SubnetId:
-        Fn::ImportValue: !Sub "${EnvironmentName}-PRI-SN"
+      NetworkInterfaces:
+      - AssociatePublicIpAddress: true
+        DeviceIndex: "0"
+        GroupSet:
+        - !Ref WebAccessSecurityGroup
+        SubnetId:
+          Fn::ImportValue: !Sub "${EnvironmentName}-PRI-SN"

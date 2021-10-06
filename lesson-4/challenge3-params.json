@@ -2,5 +2,9 @@
 	{
 		"ParameterKey": "EnvironmentName",
 		"ParameterValue": "UdacityProject-challenge"
+	},
+	{
+		"ParameterKey": "AmiId",
+		"ParameterValue": "ami-07df274a488ca9195"
 	}
 ]

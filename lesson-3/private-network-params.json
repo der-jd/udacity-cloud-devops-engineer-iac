@@ -1,0 +1,18 @@
+[
+	{
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "UdacityProject-on-premise-network"
+	},
+	{
+		"ParameterKey": "VpcCIDR",
+		"ParameterValue": "11.0.0.0/16"
+	},
+	{
+		"ParameterKey": "PrivateSubnet1CIDR",
+		"ParameterValue": "11.0.0.0/24"
+	},
+	{
+		"ParameterKey": "PrivateSubnet2CIDR",
+		"ParameterValue": "11.0.1.0/24"
+	}
+]

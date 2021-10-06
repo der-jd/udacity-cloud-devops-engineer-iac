@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Just me / Udacity - This template deploys a EC2 Instance with a webserver in a VPC
+Parameters:
+  VpcIdParameter:
+    Description: VPC used to deploy our resources below
+    Type: AWS::EC2::VPC::Id #String
+  ImageIdParameter:
+    Description: AMI to use for our base image
+    Type: String
+  SubnetIdParameter:
+    Description: Subnet to be used for our Web Server
+    Type: AWS::EC2::Subnet::Id #String
+Resources:
+  myWebAccessSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Udacity, Allow http to our test host
+      GroupName: Udacity-Security-Group
+      SecurityGroupIngress:
+      - IpProtocol: TCP
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        CidrIp: 0.0.0.0/0
+      VpcId:
+        Ref: VpcIdParameter
+  myWebServerInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId:
+        Ref: ImageIdParameter
+      InstanceType: t2.micro
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet: 
+            - Ref: myWebAccessSecurityGroup
+          SubnetId: 
+            Ref: SubnetIdParameter
+      UserData: 
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo yum update -y
+          sudo yum install -y httpd
+          sudo systemctl start httpd
+          sudo systemctl enable httpd

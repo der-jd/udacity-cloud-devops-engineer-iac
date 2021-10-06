@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "VpcIdParameter",
+    "ParameterValue": "vpc-4bcca221"
+  },
+  {
+    "ParameterKey": "SubnetIdParameter",
+    "ParameterValue": "subnet-a94617c3"
+  },
+  {
+    "ParameterKey": "ImageIdParameter",
+    "ParameterValue": "ami-07df274a488ca9195"
+  }
+]

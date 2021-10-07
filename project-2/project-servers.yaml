@@ -54,6 +54,28 @@ Resources:
         ToPort: -1
         CidrIp: 0.0.0.0/0
 
+  # IAM role
+  UdacityS3ReadOnlyEC2:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+          Action:
+          - 'sts:AssumeRole'
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+  ServerInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+      - !Ref UdacityS3ReadOnlyEC2
+
   # Auto Scaling
   WebServerLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -66,6 +88,7 @@ Resources:
            systemctl start apache2.service
            cd /var/www/html
            echo "it works! Udagram, Udacity" > index.html
+      IamInstanceProfile: !Ref ServerInstanceProfile
       ImageId: !Ref AmiId
       SecurityGroups:
       - Ref: WebServerSecGroup

@@ -1,0 +1,22 @@
+[
+	{
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "UdacityProject"
+	},
+	{
+		"ParameterKey": "UserName",
+		"ParameterValue": "admin"
+	},
+	{
+		"ParameterKey": "Password",
+		"ParameterValue": "password"
+	},
+	{
+		"ParameterKey": "SubnetGroupIds",
+		"ParameterValue": "subnet-a94617c3, subnet-62961a1e"
+	},
+	{
+		"ParameterKey": "SecurityGroupIds",
+		"ParameterValue": "sg-0ad2d7d2c06bde769"
+	}
+]

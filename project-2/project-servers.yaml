@@ -136,6 +136,6 @@ Outputs:
 
   LoadBalancerURL:
     Description: DNS name of the load balancer
-    Value: !Sub http://${!GetAtt WebServerLoadBalancer.DNSName}
+    Value: !Sub http://${WebServerLoadBalancer.DNSName}
     Export:
       Name: !Sub ${EnvironmentName}-LB-URL

@@ -1,0 +1,15 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "RestrictToOwnIp",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": "s3:GetObject",
+			"Resource": ["arn:aws:s3:::my-bucket-880754027086/*"],
+			"Condition": {
+				"IpAddress": {"aws:SourceIp": "77.47.26.72/32"}
+			}
+	  	}
+	]
+}
